@@ -8,23 +8,40 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var value = 10
+    
     var body: some View {
         VStack{
-            Text("Your score is")
+            Text("Value: \(value)!")
+                .padding()
             
-            Text("1000")
-                .font(.title)
+            Button("Increment"){
+                value += 1
+            }
+            
+            Button("Decrement"){
+                value -= 1
+            }
         }
-        .accessibilityElement() // children: .ignore is a default value
-        .accessibilityLabel("Your score is 1000")
-        
+        .accessibilityElement()
+        .accessibilityLabel("Value")
+        .accessibilityValue(String(value))
+        .accessibilityAdjustableAction{ direction in
+            switch direction {
+            case .increment:
+                value += 1
+            case .decrement:
+                value -= 1
+            default:
+                print("Not handled")
+                
+            }
+        }
     }
-
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
-
 }
